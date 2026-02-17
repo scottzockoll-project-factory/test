@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { notes } from "@/db/schema";
+import { posts } from "@/db/schema";
 import { desc } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { requireAuth } from "@/lib/auth";
@@ -7,17 +7,17 @@ import { requireAuth } from "@/lib/auth";
 export default async function Home() {
   await requireAuth();
 
-  const allNotes = await db
+  const allPosts = await db
     .select()
-    .from(notes)
-    .orderBy(desc(notes.createdAt));
+    .from(posts)
+    .orderBy(desc(posts.createdAt));
 
-  async function addNote(formData: FormData) {
+  async function addPost(formData: FormData) {
     "use server";
     await requireAuth();
     const content = formData.get("content") as string;
     if (!content?.trim()) return;
-    await db.insert(notes).values({ content: content.trim() });
+    await db.insert(posts).values({ title: content.trim(), content: content.trim() });
     revalidatePath("/");
   }
 
@@ -25,14 +25,14 @@ export default async function Home() {
     <div>
       <p>ladies and gentlemen may i have your attention please!</p>
       <br />
-      <form action={addNote}>
-        <input type="text" name="content" placeholder="Add a note..." />
+      <form action={addPost}>
+        <input type="text" name="content" placeholder="Add a post..." />
         <button type="submit">Add</button>
       </form>
       <br />
       <ul>
-        {allNotes.map((note) => (
-          <li key={note.id}>{note.content}</li>
+        {allPosts.map((post) => (
+          <li key={post.id}>{post.content}</li>
         ))}
       </ul>
     </div>

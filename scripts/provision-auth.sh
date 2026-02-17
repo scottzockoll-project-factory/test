@@ -48,9 +48,8 @@ if [ -n "${RESEND_API_KEY:-}" ]; then
   set_vercel_env "RESEND_API_KEY" "$RESEND_API_KEY"
 fi
 
-if [ -n "${ALLOWED_EMAILS:-}" ]; then
-  set_vercel_env "ALLOWED_EMAILS" "$ALLOWED_EMAILS"
-fi
+# Always set ALLOWED_EMAILS (even if empty) to ensure whitelist updates propagate
+set_vercel_env "ALLOWED_EMAILS" "${ALLOWED_EMAILS:-}"
 
 if [ -n "${ADMIN_EMAIL:-}" ]; then
   set_vercel_env "ADMIN_EMAIL" "$ADMIN_EMAIL"

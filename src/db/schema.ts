@@ -5,10 +5,11 @@ import {
   timestamp,
 } from "drizzle-orm/pg-core";
 
-export { sessions } from "./schema-auth";
-
-export const notes = pgTable("notes", {
+// Example table - replace with your own schema
+export const posts = pgTable("posts", {
   id: serial("id").primaryKey(),
-  content: text("content").notNull(),
+  title: text("title").notNull(),
+  content: text("content"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });

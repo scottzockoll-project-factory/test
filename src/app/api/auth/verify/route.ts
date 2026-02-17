@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
         "Unknown";
 
       await resend.emails.send({
-        from: "auth@scottzockoll.com",
+        from: "noreply@auth.scottzockoll.com",
         to: adminEmail,
         subject: `New login: ${email}`,
         html: `

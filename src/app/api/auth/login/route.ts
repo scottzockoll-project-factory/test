@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
   const magicLink = `${baseUrl}/api/auth/verify?token=${magicToken}`;
 
   await resend.emails.send({
-    from: "auth@scottzockoll.com",
+    from: "noreply@auth.scottzockoll.com",
     to: normalizedEmail,
     subject: "Your sign-in link",
     html: `
